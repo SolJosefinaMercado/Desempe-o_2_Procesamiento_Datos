@@ -1,9 +1,12 @@
-'''
-Responsabilidad de este modulo:
-- Crear la sesion de spark y entregarla a los demas modulos
-- Cuando se cree la sesion de spark, el Driver se conecta con el motor de Spark, arranca el
-Spark Context y pide recursos al cluster Manager. 
-'''
+"""
+Módulo: sesion_spark.py
+Descripción: Crea y configura la sesión de Spark
+Autor/a: <Josefina Mercado> — Legajo <número>
+Proyecto: 2° Desempeño — Procesamiento de Datos (ISSD)
+
+Entrada: <qué recibe el módulo>
+Salida: <qué devuelve o qué archivo genera>
+"""
 from pyspark.sql import SparkSession
 
 def crear_sesion(nombre_app):
