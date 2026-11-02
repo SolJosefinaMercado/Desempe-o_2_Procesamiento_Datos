@@ -1,7 +1,7 @@
 py4j==0.10.9.9
 pyspark==4.2.1
 requests
-pandas
+pandas<3
 pyarrow
 sqlalchemy
 plotly

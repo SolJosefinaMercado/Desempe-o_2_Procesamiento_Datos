@@ -3,23 +3,26 @@ Resposabilidad del modulo Main:
 Coordinar la ejecución del programa, llamar a los otros modulos en el orden correcto
 '''
 from src.sesion_spark import crear_sesion
-
+from src import config
+from src.carga_datos import descargar_dataset, leer_dataset, validar_columnas, cargar_datos
+from pyspark.sql.functions import col, count, when
+from src.config import DICT_TIPOS, NOMBRE_APP
+from src.limpieza import limpiar_dataset
+from src.carga_datos import cargar_datos, cargar_zonas
+from src.transformacion import transformar_datos
 
 if __name__ == "__main__":
-    from src.sesion_spark import crear_sesion
-    from src import config
-    from src.carga_datos import descargar_dataset, leer_dataset, validar_columnas
+    print("\n========== 1. CARGA ==========")
+    spark = crear_sesion(NOMBRE_APP)
+    df = cargar_datos(spark)
 
-    spark = crear_sesion(config.NOMBRE_APP)
+    print("\n========== 2. LIMPIEZA ==========")
+    df = limpiar_dataset(df)
 
-    ruta = descargar_dataset(config.DATASET_URL, config.RUTA_TAXI_RAW)
-    df = leer_dataset(spark, ruta)
+    print("\n========== 3. TRANSFORMACIÓN ==========")
+    zonas = cargar_zonas(spark)
+    df = transformar_datos(df, zonas)
 
-    print('*'*50)
-    df.show(5)
-    print('*'*50)
-    print("Filas:", df.count())
-    print('*'*50)
-    df.describe().show()
-
+    print("\n========== PIPELINE TERMINADO ==========")
+    print(f"Filas finales: {df.count():,}")
     spark.stop()
