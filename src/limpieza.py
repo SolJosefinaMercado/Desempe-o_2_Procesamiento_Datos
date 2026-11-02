@@ -1,12 +1,16 @@
 """
 Módulo: limpieza.py
-Descripción: quita los datos erronesos y los nulos del dataset
-Autor/a: <Josefina Mercado> — Legajo <número>
+Descripción: Corrige tipos, trata nulos y elimina duplicados y registros con valores imposibles.
+Autor/a: Josefina Mercado — Legajo <número>
 Proyecto: 2° Desempeño — Procesamiento de Datos (ISSD)
 
-Entrada: <qué recibe el módulo>
-Salida: <qué devuelve o qué archivo genera>
+Entrada: DataFrame crudo de viajes (salida de carga_datos.cargar_datos)
+Salida: DataFrame limpio, listo para transformación
 """
+from pyspark.sql.functions import col
+
+from src.config import (DICT_TIPOS, COLUMNAS_IMPUTAR, FECHA_INICIO, FECHA_FIN,
+                        DISTANCIA_MAX_MILLAS)
 
 def corregir_tipos(dataframe): 
     """
