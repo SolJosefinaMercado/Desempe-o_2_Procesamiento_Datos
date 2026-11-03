@@ -10,6 +10,7 @@ from src.config import DICT_TIPOS, NOMBRE_APP
 from src.limpieza import limpiar_dataset
 from src.carga_datos import cargar_datos, cargar_zonas
 from src.transformacion import transformar_datos
+from src.modelo import entrenar_modelo
 
 if __name__ == "__main__":
     print("\n========== 1. CARGA ==========")
@@ -22,6 +23,10 @@ if __name__ == "__main__":
     print("\n========== 3. TRANSFORMACIÓN ==========")
     zonas = cargar_zonas(spark)
     df = transformar_datos(df, zonas)
+
+    predicciones, mae, mae_base = entrenar_modelo(df)
+    print(f"MAE con distancia: USD {mae:.2f}")
+    print(f"MAE tarifa fija:   USD {mae_base:.2f}")
 
     print("\n========== PIPELINE TERMINADO ==========")
     print(f"Filas finales: {df.count():,}")
