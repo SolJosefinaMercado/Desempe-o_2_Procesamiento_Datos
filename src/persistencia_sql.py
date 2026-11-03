@@ -72,3 +72,19 @@ def consultar(sql, ruta_db):
     """
     with sqlite3.connect(ruta_db) as conexion:
         return pd.read_sql(sql, conexion)
+
+    """
+    Cómo se usa
+    Al final del EDA, con las tablas que ya calculadas. 
+    
+    # imports
+
+    from src.persistencia_sql import guardar_resultados, consultar
+    from src import config
+
+    guardar_resultados({
+        "viajes_por_hora": df_por_hora,              # groupBy("hora")
+        "tarifa_por_distrito": df_por_distrito,      # groupBy("distrito_subida")
+        "aeropuerto_vs_resto": df_aeropuerto,        # groupBy("es_aeropuerto")
+    }, config.RUTA_DB)
+    """
