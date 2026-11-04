@@ -8,18 +8,30 @@ Entrada: <qué recibe el módulo>
 Salida: <qué devuelve o qué archivo genera>
 """
 
+import os
+import sys
+
 from pyspark.sql import SparkSession
-from src.config import NOMBRE_APP
 
 def crear_sesion(nombre_app):
     """
-    Crea la sesion de spark y la retorna
+    Crea la sesion de spark y la retorna.
+    indica a Spark que use el mismo Python que ejecuta el programa par us procesos
+
+    Parametros
+    nombre_app (str) nombre de la aplicacion en spark 
+
+    Retorna:
+    Spark session
     """
+    os.environ["PYSPARK_PYTHON"] = sys.executable
+    os.environ["PYSPARK_DRIVER_PYTHON"] = sys.executable
+
     sesion = (
         SparkSession.builder
         .appName(nombre_app)                    # nombre de la aplicacion
         .master("local[*]")                     # le dice a spark que corra localmente y que use los nucleos del procesador como executors
-        .config("spark.ui.showConsoleProgress", "false")
+        .config("spark.ui.showConsoleProgress", "false") # oculta las barras de progreso
         .getOrCreate()
                          
                                   # crear u obtiene la sesion de spark, si ya hay una sesion abierta la reutiliza, sino crea una nueva

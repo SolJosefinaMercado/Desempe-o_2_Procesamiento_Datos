@@ -28,6 +28,7 @@ if __name__ == "__main__":
     df = transformar_datos(df, zonas)
 
     print("\n========== 4. EDA ==========")
+    print("calculando resultados")
     resultados = calcular_resultados_eda(df, zonas)
 
     print("\n========== 5. MODELO ==========")
@@ -42,3 +43,5 @@ if __name__ == "__main__":
     print("\n========== PIPELINE TERMINADO ==========")
     print(f"Filas finales: {df.count():,}")
     spark.stop()
+
+    # DASHBOARD python -m streamlit run app/dashboard.py --server.headless true

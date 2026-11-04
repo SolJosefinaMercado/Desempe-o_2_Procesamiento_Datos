@@ -13,18 +13,21 @@ Grupo | persistencia en SQL
 [Escribir en dos o tres líneas qué responde el proyecto y qué predice el modelo.]
 
 ## Estructura del proyecto
-main.py → ejecuta el pipeline completo
+
+```
+main.py                  → ejecuta el pipeline completo
 src/
-config.py → rutas, URLs y parámetros
-sesion_spark.py → crea la sesión de Spark
-carga_datos.py → descarga y lectura de los datos
-limpieza.py → tipos, nulos, duplicados y valores inválidos
-transformacion.py → variables nuevas, distritos y guardado en Parquet
-eda.py → tablas del análisis exploratorio
-modelo.py → modelo de regresión con MLlib
-persistencia_sql.py → guardado y consultas en SQLite
-app/dashboard.py → dashboard en Streamlit
+  config.py              → rutas, URLs y parámetros
+  sesion_spark.py        → crea la sesión de Spark
+  carga_datos.py         → descarga y lectura de los datos
+  limpieza.py            → tipos, nulos, duplicados y valores inválidos
+  transformacion.py      → variables nuevas, distritos y guardado en Parquet
+  eda.py                 → tablas del análisis exploratorio
+  modelo.py              → modelo de regresión con MLlib
+  persistencia_sql.py    → guardado y consultas en SQLite
+app/dashboard.py         → dashboard en Streamlit
 notebooks/eda_pellegrini.ipynb → análisis exploratorio comentado
+```
 
 
 **Fuente de datos:** [TLC Trip Record Data](https://www.nyc.gov/site/tlc/about/tlc-trip-record-data.page), viajes en taxi amarillo de enero de 2024, más la tabla de zonas `taxi_zone_lookup.csv`.
