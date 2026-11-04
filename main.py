@@ -1,33 +1,43 @@
-'''
-Resposabilidad del modulo Main:
-Coordinar la ejecución del programa, llamar a los otros modulos en el orden correcto
-'''
-from src.sesion_spark import crear_sesion
+"""
+Módulo: main.py
+Descripción: Coordina el pipeline completo, llamando a los módulos en orden.
+Autor/a: Equipo
+Proyecto: 2° Desempeño — Procesamiento de Datos (ISSD)
+"""
 from src import config
-from src.carga_datos import descargar_dataset, leer_dataset, validar_columnas, cargar_datos
-from pyspark.sql.functions import col, count, when
-from src.config import DICT_TIPOS, NOMBRE_APP
-from src.limpieza import limpiar_dataset
+from src.sesion_spark import crear_sesion
 from src.carga_datos import cargar_datos, cargar_zonas
+from src.limpieza import limpiar_dataset
 from src.transformacion import transformar_datos
+from src.eda import calcular_resultados_eda
 from src.modelo import entrenar_modelo
+from src.persistencia_sql import guardar_resultados
 
 if __name__ == "__main__":
+
+    spark = crear_sesion(config.NOMBRE_APP)
+
     print("\n========== 1. CARGA ==========")
-    spark = crear_sesion(NOMBRE_APP)
     df = cargar_datos(spark)
+    zonas = cargar_zonas(spark)
 
     print("\n========== 2. LIMPIEZA ==========")
     df = limpiar_dataset(df)
 
     print("\n========== 3. TRANSFORMACIÓN ==========")
-    zonas = cargar_zonas(spark)
     df = transformar_datos(df, zonas)
 
-    print("\n========== 4. ENTRENAMIENTO DEL MODELO ==========")
-    predicciones, mae, mae_base = entrenar_modelo(df)
-    print(f"MAE modelo ampliado: USD {mae:.2f}")
-    print(f"MAE tarifa fija:   USD {mae_base:.2f}")
+    print("\n========== 4. EDA ==========")
+    resultados = calcular_resultados_eda(df, zonas)
+
+    print("\n========== 4. MODELO ==========")
+    metricas, predicciones_muestra = entrenar_modelo(df)
+    metricas.show()
+    resultados["metricas_modelo"] = metricas
+    resultados["predicciones_muestra"] = predicciones_muestra
+
+    print("\n========== 6. PERSISTENCIA EN SQL ==========")
+    guardar_resultados(resultados, config.RUTA_DB)
 
     print("\n========== PIPELINE TERMINADO ==========")
     print(f"Filas finales: {df.count():,}")

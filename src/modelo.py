@@ -19,8 +19,8 @@ Retorna:
 tuple: (metricas, predicciones_muestra), dos DataFrames de Spark chicos.
 """
 
-def entrenar_modelo(df):
-    datos_modelo = df.select(*VARIABLES_CATEGORICAS, *VARIABLES_NUMERICAS, COLUMNA_OBJETIVO)
+def entrenar_modelo(viajes):
+    datos_modelo = viajes.select(*VARIABLES_CATEGORICAS, *VARIABLES_NUMERICAS, COLUMNA_OBJETIVO)
     entrenamiento, prueba = datos_modelo.randomSplit([0.8, 0.2], seed=SEMILLA)
 # ----------------------------------------------------------------------------------------------
     armador_distancia = VectorAssembler(
@@ -87,5 +87,15 @@ def entrenar_modelo(df):
     predicciones_base = prueba.withColumn("prediction", F.lit(tarifa_promedio))
     mae_base = evaluador.evaluate(predicciones_base)
 
-    return predicciones, mae, mae_base
+    # Integración: resultados como tablas, para guardarlos en SQLite
+    metricas = viajes.sparkSession.createDataFrame(
+        [("Tarifa fija", float(mae_base)),
+         ("Solo distancia", float(mae_distancia)),
+         ("Modelo ampliado", float(mae))],
+        ["modelo", "mae"],
+    )
+    predicciones_muestra = (predicciones
+                            .select("fare_amount", "prediction", "distrito_subida")
+                            .sample(fraction=0.01, seed=42))
+    return metricas, predicciones_muestra
 

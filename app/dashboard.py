@@ -1,7 +1,13 @@
+"""
+Módulo: dashboard.py
+Descripción: Dashboard en Streamlit con la demanda por hora y la comparación de modelos de tarifa.
+Autor/a: <Santiago Mustillo> — Legajo <número>
+Proyecto: 2° Desempeño — Procesamiento de Datos (ISSD)
+Ejecutar desde la raíz del proyecto: python -m streamlit run app/dashboard.py
+"""
+
 from pathlib import Path
-
 import streamlit as st
-
 from src.persistencia_sql import consultar
 
 ruta_db = Path(__file__).resolve().parents[1] / "data" / "nyc_taxi.db"
@@ -32,10 +38,13 @@ st.bar_chart(viajes_filtrados, x="Hora de subida", y="viajes")
 st.subheader("Comparación de modelos de tarifa")
 st.caption("Error absoluto medio (MAE) en los mismos viajes de prueba. Menor es mejor.")
 
-st.table([
-    {"Modelo": "Tarifa fija", "MAE (USD)": "10,90"},
-    {"Modelo": "Solo distancia", "MAE (USD)": "2,58"},
-    {"Modelo": "Modelo ampliado", "MAE (USD)": "2,42"},
-])
+# Integración: los MAE se leen de la tabla que guarda main.py, en vez de estar escritos a mano
+metricas = consultar("SELECT modelo, ROUND(mae, 2) AS mae FROM metricas_modelo", str(ruta_db))
+st.table(metricas)
 
-st.write("Al sumar las nuevas variables, el MAE bajó USD 0,16 por viaje (aprox. 6,2 %).")
+# Integración: la mejora se calcula con los valores de la tabla
+mae = dict(zip(metricas["modelo"], metricas["mae"]))
+mejora = mae["Solo distancia"] - mae["Modelo ampliado"]
+st.write(f"Al sumar las nuevas variables, el MAE bajó USD {mejora:.2f} por viaje "
+         f"(aprox. {mejora / mae['Solo distancia']:.1%}).")
+
