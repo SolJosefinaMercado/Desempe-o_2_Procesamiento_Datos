@@ -30,7 +30,7 @@ if __name__ == "__main__":
     print("\n========== 4. EDA ==========")
     resultados = calcular_resultados_eda(df, zonas)
 
-    print("\n========== 4. MODELO ==========")
+    print("\n========== 5. MODELO ==========")
     metricas, predicciones_muestra = entrenar_modelo(df)
     metricas.show()
     resultados["metricas_modelo"] = metricas

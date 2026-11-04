@@ -25,12 +25,12 @@ viajes_por_hora = consultar(
 )
 
 viajes_por_hora["Hora de subida"] = viajes_por_hora["hora"].map(
-    lambda hora: f"{int(hora):02d}:00"
+    lambda hora: f"{int(hora):02d}:00" #type: ignore 
 )
 desde, hasta = st.slider("Filtrar por hora de subida", 0, 23, (0, 23))
 
 viajes_filtrados = viajes_por_hora[
-    viajes_por_hora["hora"].between(desde, hasta)
+    viajes_por_hora["hora"].between(desde, hasta) #type: ignore
 ]
 
 st.bar_chart(viajes_filtrados, x="Hora de subida", y="viajes")

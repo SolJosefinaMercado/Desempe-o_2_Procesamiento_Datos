@@ -1,28 +1,37 @@
+"""
+Módulo: modelo.py
+Descripción: Modelo de regresión lineal con MLlib que predice la tarifa y la compara con dos referencias.
+Autor/a: Santiago Mustillo — Legajo <número> / Josefina Mercado (integración)
+Proyecto: 2° Desempeño — Procesamiento de Datos (ISSD)
+
+Entrada: DataFrame final de viajes
+Salida: tabla de métricas (MAE por modelo) y muestra de predicciones, para guardar en SQLite
+"""
+
 from pyspark.ml.evaluation import RegressionEvaluator
 from pyspark.ml.feature import OneHotEncoder, StringIndexer, VectorAssembler
 from pyspark.ml.regression import LinearRegression
 from pyspark.sql import functions as F
 from src.config import SEMILLA, COLUMNA_OBJETIVO, VARIABLES_NUMERICAS, VARIABLES_CATEGORICAS
 
-"""
-Entrena y evalúa tres modelos sobre el mismo conjunto de prueba (80/20):
-1. Tarifa fija: predice siempre la tarifa promedio del entrenamiento (referencia).
-2. Solo distancia: regresión lineal con trip_distance.
-3. Modelo ampliado: Pipeline de MLlib con las variables elegidas en el EDA.
-Las variables categóricas se indexan (StringIndexer) y codifican (OneHotEncoder)
-porque son códigos, no cantidades.
-
-Parámetros:
-df (DataFrame): DataFrame final de viajes.
-
-Retorna:
-tuple: (metricas, predicciones_muestra), dos DataFrames de Spark chicos.
-"""
 
 def entrenar_modelo(viajes):
+    """
+    Entrena y evalúa tres modelos sobre el mismo conjunto de prueba (80/20):
+    1. Tarifa fija: predice siempre la tarifa promedio del entrenamiento (referencia).
+    2. Solo distancia: regresión lineal con trip_distance.
+    3. Modelo ampliado: Pipeline de MLlib con las variables elegidas en el EDA.
+    Las variables categóricas se indexan (StringIndexer) y codifican (OneHotEncoder)
+    porque son códigos, no cantidades.
+
+    Parámetros:
+    df (DataFrame): DataFrame final de viajes.
+
+    Retorna:
+    tuple: (metricas, predicciones_muestra), dos DataFrames de Spark chicos.
+    """
     datos_modelo = viajes.select(*VARIABLES_CATEGORICAS, *VARIABLES_NUMERICAS, COLUMNA_OBJETIVO)
     entrenamiento, prueba = datos_modelo.randomSplit([0.8, 0.2], seed=SEMILLA)
-# ----------------------------------------------------------------------------------------------
     armador_distancia = VectorAssembler(
         inputCols=["trip_distance"],
         outputCol="features",

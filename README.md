@@ -6,103 +6,28 @@
 
 ## Ejecución
 
-### Opción A — Google Colab (recomendada para la corrección)
+### En VS Code (Windows)
 
-No requiere instalar nada: Colab ya incluye Python y Java.
+1. Comprobar Java: `java -version` (17 o superior).
+2. Crear y activar el entorno virtual:
+   ```powershell
+   python -m venv .venv
+   .\.venv\Scripts\activate
+   ```
+   Si aparece "la ejecución de scripts está deshabilitada": `Set-ExecutionPolicy -Scope CurrentUser RemoteSigned`.
+3. Instalar dependencias: `python -m pip install -r requirements.txt`
+4. **Solo Windows:** para escribir archivos, Spark necesita `winutils.exe` y `hadoop.dll` en `C:\hadoop\bin`, la variable `HADOOP_HOME=C:\hadoop` y `C:\hadoop\bin` en el `Path`.
+5. Ejecutar el pipeline completo desde la raíz del proyecto:
+   ```powershell
+   python main.py
+   ```
+   Genera `data/processed/taxi_limpio` (Parquet) y `data/nyc_taxi.db` (SQLite con los resultados del EDA y del modelo).
+6. Abrir el dashboard (desde la terminal, no desde un notebook):
+   ```powershell
+   python -m streamlit run app/dashboard.py
+   ```
+7. El análisis exploratorio comentado está en `notebooks/eda_pellegrini.ipynb`.
 
-1. Abrir `main.ipynb` en Google Colab.
-2. Ejecutar todas las celdas (*Entorno de ejecución → Ejecutar todas*).
+### En Google Colab
 
-La primera celda instala las dependencias y descarga el dataset automáticamente.
-
-### Opción B — Local (Windows / PowerShell)
-
-**0. Desactivar Anaconda** (solo si está instalado):
-
-```powershell
-conda deactivate
-```
-
-**1. Comprobar que Java está instalado:**
-
-```powershell
-java -version
-```
-
-Debe mostrar la versión 17 o superior. Si el comando no se reconoce, Java no está instalado o falta configurar la variable de entorno `JAVA_HOME`.
-
-**2. Crear el entorno virtual:**
-
-```powershell
-python -m venv .venv
-```
-
-> Si aparece *"no se encontró Python"*, usar el lanzador de Python para Windows:
-> ```powershell
-> py -m venv .venv
-> ```
-> Si `py` tampoco funciona, instalar Python desde [python.org](https://www.python.org/downloads/) tildando **"Add python.exe to PATH"**.
-
-**3. Activar el entorno:**
-
-```powershell
-.\.venv\Scripts\activate
-```
-
-> Si aparece un error de *"la ejecución de scripts está deshabilitada"*, ejecutar una sola vez
-**3. Instala requirements:**
-python -m pip install -r requirements.txt
-
-## Cómo ejecutar el dashboard
-
-### 1. Generar la base de datos en Colab
-
-Con el repositorio clonado y las dependencias instaladas, ejecutá esta celda en Colab:
-
-```python
-%cd /content/Desempe-o_2_Procesamiento_Datos
-!python main.py
-```
-
-El programa genera los datos procesados en `data/processed/taxi_limpio`. Cuando termine, ejecutá esta segunda celda para contar los viajes por hora y guardar el resultado en SQLite:
-
-```python
-from pyspark.sql import SparkSession
-from src import config
-from src.persistencia_sql import guardar_tabla
-
-spark = SparkSession.builder.getOrCreate()
-viajes = spark.read.parquet("data/processed/taxi_limpio")
-
-viajes_por_hora = (
-    viajes.groupBy("hora")
-    .count()
-    .withColumnRenamed("count", "viajes")
-)
-
-guardar_tabla(viajes_por_hora.toPandas(), "viajes_por_hora", config.RUTA_DB)
-```
-
-Para enero de 2024, el mensaje esperado es `Tabla viajes_por_hora guardada, (24 filas)`.
-
-### 2. Descargar la base de datos
-
-En otra celda de Colab, ejecutá:
-
-```python
-from google.colab import files
-
-files.download(str(config.RUTA_DB))
-```
-
-Colocá el archivo descargado `nyc_taxi.db` dentro de la carpeta `data` del proyecto en tu computadora. La ruta debe quedar así: `data/nyc_taxi.db`.
-
-### 3. Abrir el dashboard
-
-En la terminal de VS Code, desde la carpeta del proyecto y con el entorno virtual activo, ejecutá:
-
-```powershell
-python -m streamlit run app/dashboard.py
-```
-
-Abrí [http://localhost:8501/](http://localhost:8501/) en el navegador. El dashboard muestra la cantidad de viajes por hora, con un filtro de horarios, y la comparación del error de los modelos de tarifa.
+Abrir `notebooks/eda_pellegrini.ipynb` con el botón "Open in Colab" y ejecutar todas las celdas. La primera celda de código clona el repositorio, instala las dependencias y ejecuta `main.py`, que descarga los datos y genera todos los resultados.
