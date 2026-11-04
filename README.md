@@ -1,8 +1,39 @@
+# Viajes en taxi de Nueva York — Pipeline con PySpark
+
+**2° Desempeño — Procesamiento de Datos (ISSD)**
+
+| Integrante | Legajo | Responsabilidad |
+|---|---|---|
+| Josefina Mercado | <legajo> | Carga, limpieza, transformación, e integración |
+| Lucía Pellegrini | <legajo> | Análisis exploratorio con Spark |
+| Santiago Mustillo | <legajo> | Modelo de MLlib y dashboard |
+Grupo | persistencia en SQL
+## Objetivo
+
+[Escribir en dos o tres líneas qué responde el proyecto y qué predice el modelo.]
+
+## Estructura del proyecto
+main.py → ejecuta el pipeline completo
+src/
+config.py → rutas, URLs y parámetros
+sesion_spark.py → crea la sesión de Spark
+carga_datos.py → descarga y lectura de los datos
+limpieza.py → tipos, nulos, duplicados y valores inválidos
+transformacion.py → variables nuevas, distritos y guardado en Parquet
+eda.py → tablas del análisis exploratorio
+modelo.py → modelo de regresión con MLlib
+persistencia_sql.py → guardado y consultas en SQLite
+app/dashboard.py → dashboard en Streamlit
+notebooks/eda_pellegrini.ipynb → análisis exploratorio comentado
+
+
+**Fuente de datos:** [TLC Trip Record Data](https://www.nyc.gov/site/tlc/about/tlc-trip-record-data.page), viajes en taxi amarillo de enero de 2024, más la tabla de zonas `taxi_zone_lookup.csv`.
+
 ## Requisitos
 
 * **Python 3.12 o superior** (desarrollado con Python 3.14.6)
 * **Java 17 o superior** (se usó Temurin 21). PySpark necesita Java para funcionar.
-* **PySpark 4.2.1** y demás dependencias (se instalan con `requirements.txt`)
+* **PySpark 4.3.0** y demás dependencias (se instalan con `requirements.txt`)
 
 ## Ejecución
 

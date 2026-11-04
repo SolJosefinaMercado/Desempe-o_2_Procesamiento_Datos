@@ -20,12 +20,12 @@ def entrenar_modelo(viajes):
     Entrena y evalúa tres modelos sobre el mismo conjunto de prueba (80/20):
     1. Tarifa fija: predice siempre la tarifa promedio del entrenamiento (referencia).
     2. Solo distancia: regresión lineal con trip_distance.
-    3. Modelo ampliado: Pipeline de MLlib con las variables elegidas en el EDA.
+    3. Modelo ampliado: regresión lineal con distancia, aeropuerto, distrito, hora y día.
     Las variables categóricas se indexan (StringIndexer) y codifican (OneHotEncoder)
     porque son códigos, no cantidades.
 
     Parámetros:
-    df (DataFrame): DataFrame final de viajes.
+    viajes (DataFrame): DataFrame final de viajes.
 
     Retorna:
     tuple: (metricas, predicciones_muestra), dos DataFrames de Spark chicos.
@@ -92,7 +92,7 @@ def entrenar_modelo(viajes):
     mae_distancia = evaluador.evaluate(predicciones_distancia)
     print(f"MAE solo distancia (misma prueba): USD {mae_distancia:.2f}")
 
-    tarifa_promedio = entrenamiento.agg(F.avg("fare_amount")).first()[0]
+    tarifa_promedio = entrenamiento.agg(F.avg("fare_amount")).first()[0] #type: ignore
     predicciones_base = prueba.withColumn("prediction", F.lit(tarifa_promedio))
     mae_base = evaluador.evaluate(predicciones_base)
 
