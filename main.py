@@ -26,7 +26,7 @@ if __name__ == "__main__":
 
     print("\n========== 4. ENTRENAMIENTO DEL MODELO ==========")
     predicciones, mae, mae_base = entrenar_modelo(df)
-    print(f"MAE con distancia: USD {mae:.2f}")
+    print(f"MAE modelo ampliado: USD {mae:.2f}")
     print(f"MAE tarifa fija:   USD {mae_base:.2f}")
 
     print("\n========== PIPELINE TERMINADO ==========")
