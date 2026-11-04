@@ -3,7 +3,7 @@ Modulo: persistencia_sql.py
 Descripcion: Guarda en Sqlite los resultados agreagdos del EDA y del modelo
 y permite consultarlos con SQL
 
-Autor/a: <nombre> — Legajo <número>
+Autor/a: <Grupo> — Legajo <número>
 Proyecto: 2° Desempeño — Procesamiento de Datos (ISSD)
 
 Entrada: DataFrames chicos de Spark (resultados del EDA y del modelo)
@@ -25,7 +25,7 @@ def spark_a_pandas(df_spark):
     Retorna:
     Dataframe de pandas 
     """
-    return df_spark.toPandas 
+    return df_spark.toPandas()
 
 def guardar_tabla(df_pandas, nombre_tabla, ruta_db):
     """
@@ -72,19 +72,3 @@ def consultar(sql, ruta_db):
     """
     with sqlite3.connect(ruta_db) as conexion:
         return pd.read_sql(sql, conexion)
-
-    """
-    Cómo se usa
-    Al final del EDA, con las tablas que ya calculadas. 
-    
-    # imports
-
-    from src.persistencia_sql import guardar_resultados, consultar
-    from src import config
-
-    guardar_resultados({
-        "viajes_por_hora": df_por_hora,              # groupBy("hora")
-        "tarifa_por_distrito": df_por_distrito,      # groupBy("distrito_subida")
-        "aeropuerto_vs_resto": df_aeropuerto,        # groupBy("es_aeropuerto")
-    }, config.RUTA_DB)
-    """

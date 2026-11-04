@@ -48,3 +48,7 @@ COLUMNAS_FINALES = [
     "duracion_min", "velocidad_mph", "hora", "dia_semana", "es_fin_de_semana", "es_aeropuerto",
     "distrito_subida", "distrito_bajada", "nulos_imputados",
 ]
+# --- Modelo (variables elegidas en el EDA, sección 9) ---
+COLUMNA_OBJETIVO = "fare_amount"
+VARIABLES_NUMERICAS = ["trip_distance", "es_aeropuerto"]
+VARIABLES_CATEGORICAS = ["distrito_subida", "hora", "dia_semana"]

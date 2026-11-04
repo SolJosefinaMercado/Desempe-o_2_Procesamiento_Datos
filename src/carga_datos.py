@@ -7,14 +7,10 @@ Proyecto: 2° Desempeño — Procesamiento de Datos (ISSD)
 Entrada: <qué recibe el módulo>
 Salida: <qué devuelve o qué archivo genera>
 """
-from importlib.resources import path
 import os
 import requests
 from src.config import DATASET_URL, RUTA_TAXI_RAW, ZONAS_URL, RUTA_ZONAS_RAW, COLUMNAS_REQUERIDAS
 
-from importlib.resources import path
-import os
-import requests
 
 def descargar_dataset(url, ruta_destino): # ruta_destino = RUTA_RAW
     """
@@ -91,13 +87,7 @@ def validar_columnas(dataframe, columnas_requeridas): # columnas_requeridas = CO
     if faltantes:
         raise ValueError(f"Faltan columnas requeridas: {faltantes}")
     print(f"Validación correcta: las {len(columnas_requeridas)} columnas requeridas están presentes.")
-# ------------------------------------------------------------------------------------------------------------
-    
-    #print("Columnas antes:", len(dataframe.columns))
-    #dataframe = dataframe.select(columnas_requeridas)
-    #print("Columnas después:", len(dataframe.columns))
-    #return dataframe
-    # en spark los df son inmutables, por lo que se retorna un nuevo df con las columnas requeridas
+
 # ------------------------------------------------------------------------------------------------------------
 def cargar_datos(spark):
     """

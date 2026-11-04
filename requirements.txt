@@ -1,5 +1,5 @@
 py4j==0.10.9.9
-pyspark==4.2.1
+pyspark==4.3.0
 requests
 pandas<3
 pyarrow

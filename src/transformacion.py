@@ -13,16 +13,6 @@ from pyspark.sql.functions import col
 from src.config import (ZONAS_AEROPUERTO, DURACION_MIN, DURACION_MAX, VELOCIDAD_MAX,
                         COLUMNAS_FINALES, RUTA_PROCESSED)
 
-# Columnas a crear con la transformación, para el análisis y modelado
-'''
-Columna	                Uso
-ana	            Modelo y EDA
-es_fin_de_semana	    Modelo y EDA
-es_aeropuerto	        Modelo y EDA (sale de Airport_fee y RatecodeID)
-distrito_subida   
-distrito_bajada	        EDA y dashboard (join con zonas). Opcional para el modelo
-'''
-
 def agregar_variables_tiempo(df):
     """
     Agrega variables de calendario a partir de la hora de subida.
