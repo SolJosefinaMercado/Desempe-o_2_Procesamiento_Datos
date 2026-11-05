@@ -21,6 +21,8 @@ def segundos_desde(inicio):
 
 
 if __name__ == "__main__":
+    inicio_total = time.perf_counter()
+
 
     spark = crear_sesion(config.NOMBRE_APP)
 
