@@ -39,7 +39,7 @@ st.subheader("Comparación de modelos de tarifa")
 st.caption("Error absoluto medio (MAE) en los mismos viajes de prueba. Menor es mejor.")
 
 # Integración: los MAE se leen de la tabla que guarda main.py, en vez de estar escritos a mano
-metricas = consultar("SELECT modelo, ROUND(mae, 2) AS mae FROM metricas_modelo", str(ruta_db))
+metricas = consultar("SELECT modelo, mae FROM metricas_modelo", str(ruta_db))
 st.table(metricas)
 
 # Integración: la mejora se calcula con los valores de la tabla
