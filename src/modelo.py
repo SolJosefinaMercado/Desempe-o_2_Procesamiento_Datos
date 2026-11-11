@@ -1,7 +1,7 @@
 """
 Módulo: modelo.py
 Descripción: Modelo de regresión lineal con MLlib que predice la tarifa y la compara con dos referencias.
-Autor/a: Santiago Mustillo — Legajo <número> / Josefina Mercado (integración)
+Autor/a: Santiago Mustillo  / Josefina Mercado (integración)
 Proyecto: 2° Desempeño — Procesamiento de Datos (ISSD)
 
 Entrada: DataFrame final de viajes

@@ -1,7 +1,7 @@
 """
 Módulo: carga_datos.py
 Descripción: carga el dataset desde la URL y lo carga en spark 
-Autor/a: <Josefina Mercado> — Legajo <número>
+Autor/a: Josefina Mercado
 Proyecto: 2° Desempeño — Procesamiento de Datos (ISSD)
 
 Entrada: <qué recibe el módulo>

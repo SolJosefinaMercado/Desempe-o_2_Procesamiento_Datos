@@ -62,6 +62,10 @@ notebooks/eda_pellegrini.ipynb → análisis exploratorio comentado
    ```
 7. El análisis exploratorio comentado está en `notebooks/eda_pellegrini.ipynb`.
 
-### En Google Colab
+# Links útiles
 
-Abrir `notebooks/eda_pellegrini.ipynb` con el botón "Open in Colab" y ejecutar todas las celdas. La primera celda de código clona el repositorio, instala las dependencias y ejecuta `main.py`, que descarga los datos y genera todos los resultados.
+### Link al repositori en GITHUB https://github.com/SolJosefinaMercado/Desempe-o_2_Procesamiento_Datos
+
+### Link al VIDEO (Drive) https://drive.google.com/file/d/1lufQ0KL7MT6hWJEIazCA1Oqtlip7dr3P/view?usp=sharing 
+ 
+

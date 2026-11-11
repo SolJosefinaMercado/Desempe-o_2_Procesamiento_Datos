@@ -3,7 +3,7 @@ Modulo: persistencia_sql.py
 Descripcion: Guarda en Sqlite los resultados agreagdos del EDA y del modelo
 y permite consultarlos con SQL
 
-Autor/a: <Grupo> — Legajo <número>
+Autor/a: Grupo
 Proyecto: 2° Desempeño — Procesamiento de Datos (ISSD)
 
 Entrada: DataFrames chicos de Spark (resultados del EDA y del modelo)

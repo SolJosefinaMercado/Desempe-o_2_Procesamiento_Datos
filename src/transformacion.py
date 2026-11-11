@@ -1,7 +1,7 @@
 """
 Módulo: transformacion.py
 Descripción: Crea las variables derivadas, filtra viajes absurdos y guarda la tabla lista para el análisis.
-Autor/a: Josefina Mercado — Legajo <número>
+Autor/a: Josefina Mercado 
 Proyecto: 2° Desempeño — Procesamiento de Datos (ISSD)
 
 Entrada: DataFrame limpio de viajes (salida de limpieza) y DataFrame de zonas

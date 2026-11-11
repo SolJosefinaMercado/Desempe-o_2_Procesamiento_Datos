@@ -1,7 +1,7 @@
 """
 Módulo: config.py
 Descripción: Constantes del proyecto: URLs, rutas, listas de columnas y umbrales de los filtros.
-Autor/a: Josefina Mercado — Legajo <número>
+Autor/a: Josefina Mercado 
 Proyecto: 2° Desempeño — Procesamiento de Datos (ISSD)
 
 Entrada: ninguna

@@ -1,7 +1,7 @@
 """
 Módulo: limpieza.py
 Descripción: Corrige tipos, trata nulos y elimina duplicados y registros con valores imposibles.
-Autor/a: Josefina Mercado — Legajo <número>
+Autor/a: Josefina Mercado 
 Proyecto: 2° Desempeño — Procesamiento de Datos (ISSD)
 
 Entrada: DataFrame crudo de viajes (salida de carga_datos.cargar_datos)

@@ -1,7 +1,7 @@
 """
 Módulo: sesion_spark.py
 Descripción: Crea y configura la sesión de Spark
-Autor/a: <Josefina Mercado> — Legajo <número>
+Autor/a: Josefina Mercado
 Proyecto: 2° Desempeño — Procesamiento de Datos (ISSD)
 
 Entrada: <qué recibe el módulo>

@@ -1,7 +1,7 @@
 """
 Módulo: eda.py
 Descripción: Análisis exploratorio con Spark. Cada función devuelve una tabla agregada.
-Autor/a: Lucía Pellegrini (análisis) — Legajo <número> / Josefina Mercado (integración) — Legajo <número>
+Autor/a: Lucía Pellegrini (análisis) / Josefina Mercado (integración)
 Proyecto: 2° Desempeño — Procesamiento de Datos (ISSD)
 
 Entrada: DataFrame final de viajes (Parquet) y tabla de zonas
